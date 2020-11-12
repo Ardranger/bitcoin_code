@@ -5,7 +5,7 @@ import requests
 import json
 import pyfiglet
 #https://api.coindesk.com/v1/bpi/currentprice.json
-
+import sqlite3
 
 def main():
     result = pyfiglet.figlet_format("Live bitcoin ticker") 
@@ -16,11 +16,15 @@ def main():
     current_price=0
     previous_price=0
     
+
     r = requests.get("https://api.coindesk.com/v1/bpi/currentprice.json")
     parsed = json.loads(r.text)
     inital_price = float(parsed["bpi"]["USD"]["rate_float"])
     buy_and_hold_bitcoin=100/inital_price
     
+    conn = sqlite3.connect("coinbase.db")
+    c = conn.cursor()
+
     
     
     while True:
@@ -31,6 +35,7 @@ def main():
         usd_wallet,bitcoin_wallet=one_min_trading(current_price,previous_price,usd_wallet,bitcoin_wallet)
         previous_price=current_price
         print("Dumb trading assets $" + str(current_price*bitcoin_wallet + usd_wallet ) + ": Buy and hold assets $" + str(current_price*buy_and_hold_bitcoin)) 
+        datetime_stamp=parsed["time"]["updateduk"]
         time.sleep(60)
 
 
