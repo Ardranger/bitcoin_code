@@ -24,7 +24,4 @@ def harvest():
     conn.commit()
     conn.close()
   
-while True:
-    harvest()
-    time.sleep(60)
-
+harvest()
