@@ -20,7 +20,6 @@ def harvest():
     c = conn.cursor()
     date_time_obj,cuurent_price =pull_from_coinbase()
     c.execute("INSERT INTO bitcoin_coinbase VALUES (?, ?);",(date_time_obj,cuurent_price))
-"""    print(str(date_time_obj) +" : " + str(cuurent_price))"""
     conn.commit()
     conn.close()
   
