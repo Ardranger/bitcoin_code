@@ -16,11 +16,11 @@ def pull_from_coinbase():
 
 
 def harvest():
-    conn = sqlite3.connect("coinbase.db")
+    conn = sqlite3.connect("/mnt/external_hdd/Data/coindesk.db")
     c = conn.cursor()
     date_time_obj,cuurent_price =pull_from_coinbase()
     c.execute("INSERT INTO bitcoin_coinbase VALUES (?, ?);",(date_time_obj,cuurent_price))
-    print(str(date_time_obj) +" : " + str(cuurent_price))
+"""    print(str(date_time_obj) +" : " + str(cuurent_price))"""
     conn.commit()
     conn.close()
   
