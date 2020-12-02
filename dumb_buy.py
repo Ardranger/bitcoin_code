@@ -52,6 +52,20 @@ def one_min_trading(current_price,previous_price,usd_wallet,bitcoin_wallet):
             print("No change")
         return usd_wallet,bitcoin_wallet;
 
+def one_min_trading_phemex(current_price,previous_price,usd_wallet,bitcoin_wallet):
+        if (current_price > previous_price) and (usd_wallet != 0):
+            bitcoin_wallet=(usd_wallet/current_price)*0.999
+           #  print("Bought BT " + str(bitcoin_wallet))
+            usd_wallet=0
+        elif (current_price < previous_price) and (bitcoin_wallet != 0):
+            usd_wallet=(current_price*bitcoin_wallet)*0.999
+           # print("Bought $" + str(usd_wallet))
+            bitcoin_wallet=0
+       # else:
+           # print("No change")
+        return usd_wallet,bitcoin_wallet;
+
+
 if __name__ == "__main__":
     # execute only if run as a script
     main()
