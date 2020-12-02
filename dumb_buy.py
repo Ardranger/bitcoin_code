@@ -52,4 +52,6 @@ def one_min_trading(current_price,previous_price,usd_wallet,bitcoin_wallet):
             print("No change")
         return usd_wallet,bitcoin_wallet;
 
-main()
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
