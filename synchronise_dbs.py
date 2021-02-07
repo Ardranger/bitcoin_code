@@ -20,8 +20,27 @@ def merge():
     #print(rpi_df)
 
     uber_df = pd.concat([vm1_df,vm2_df,rpi_df])
-    print(uber_df)
+    
+    #Convert  strs in "datetime" col to datetime objects for sort to work
+    uber_df['datetime'] = pd.to_datetime(uber_df['datetime'], format='%Y-%m-%d %H:%M:%S')
+    uber_df = uber_df.sort_values(by=["datetime"])
+    #print(uber_df)
+    uber_df = uber_df.drop_duplicates()
+    #print(uber_df)
 
+    conn = sqlite3.connect('/mnt/external_hdd/Data/uber.db') 
+    c = conn.cursor()
+
+    c.execute('''CREATE TABLE bitcoin_coinbase
+             (datetime text, price real)''')
+    conn.commit()
+    conn.close()
+
+    conn = sqlite3.connect('/mnt/external_hdd/Data/uber.db') 
+    c = conn.cursor()
+    uber_df.to_sql('bitcoin_coinbase', conn, if_exists='replace', index = False)
+    conn.commit()
+    conn.close()
 
 def load_db_to_df(path_to_sqlite_db):
 
@@ -32,5 +51,5 @@ def load_db_to_df(path_to_sqlite_db):
 
 
 if __name__ == "__main__":
-    #sync_dbs()
+    sync_dbs()
     merge()
