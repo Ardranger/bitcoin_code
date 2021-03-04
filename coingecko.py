@@ -26,7 +26,6 @@ def main():
     requested_fields = "&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true"
 
     api_call = api_base_url + requested_coins + requested_fiat+ requested_fields
-    print(api_call)
     timestamp = datetime.datetime.now()
     r = requests.get(api_call)
     parsed = json.loads(r.text)
