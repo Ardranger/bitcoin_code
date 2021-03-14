@@ -3,11 +3,11 @@ import datetime
 import json
 import time
 import sqlite3 
+import yaml
 
 
-
-def setup_db_coingecko(parsed):
-    conn = sqlite3.connect("/mnt/external_hdd/Data/coingecko.db")
+def setup_db_coingecko(parsed,db_path):
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     for coin_name in parsed:
         #print(timestamp)
@@ -16,11 +16,16 @@ def setup_db_coingecko(parsed):
     conn.close()
 
 
+
+
 def main():
-    # "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Clitecoin%2Cethereum%2Cbinancecoin%2CCardano%2CTether%2CPolkadot%2CXRP&vs_currencies=usd%2Ceur&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true"
     coins="bitcoin,litecoin,ethereum,binancecoin,Cardano,Polkadot,XRP"
     api_base_url = "https://api.coingecko.com/api/v3/simple/price?"
-    # "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Clitecoin%2Cethereum%2Cbinancecoin%2CCardano%2CTether%2CPolkadot%2CXRP&vs_currencies=usd%2Ceur&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true"
+    db_path = "/mnt/external_hdd/Data/coingecko.db"
+    with open(r'coin_config.yaml') as file:
+        coin_list = yaml.full_load(file)
+        requested_coins = "ids=" + ("%2").join(coin_list["coins"])
+
     requested_coins = "ids=bitcoin%2Clitecoin%2Cethereum%2Cbinancecoin%2CCardano%2CPolkadot%2CXRP"
     requested_fiat = "&vs_currencies=usd"
     requested_fields = "&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true"
@@ -29,15 +34,24 @@ def main():
     timestamp = datetime.datetime.now()
     r = requests.get(api_call)
     parsed = json.loads(r.text)
-    #print(json.dumps(parsed, indent=4, sort_keys=True))
-    #setup_db_coingecko(parsed)
-    for coin_name in parsed:
-        #print(timestamp)
-        conn = sqlite3.connect("/mnt/external_hdd/Data/coingecko.db")
-        c = conn.cursor()
-        c.execute("INSERT INTO "+str(coin_name) +" VALUES (?, ?, ?, ?, ?);",(timestamp,parsed[coin_name]["usd"],parsed[coin_name]["usd_market_cap"],parsed[coin_name]["last_updated_at"],parsed[coin_name]["usd_24h_vol"]))
-        conn.commit()
-        conn.close()
+    
+    try:
+        for coin_name in parsed:
+            #print(timestamp)
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+            c.execute("INSERT INTO "+str(coin_name) +" VALUES (?, ?, ?, ?, ?);",(timestamp,parsed[coin_name]["usd"],parsed[coin_name]["usd_market_cap"],parsed[coin_name]["last_updated_at"],parsed[coin_name]["usd_24h_vol"]))
+            conn.commit()
+            conn.close()
+    except:
+        setup_db_coingecko(parsed,db_path)
+        for coin_name in parsed:
+            #print(timestamp)
+            conn = sqlite3.connect(db_path)
+            c = conn.cursor()
+            c.execute("INSERT INTO "+str(coin_name) +" VALUES (?, ?, ?, ?, ?);",(timestamp,parsed[coin_name]["usd"],parsed[coin_name]["usd_market_cap"],parsed[coin_name]["last_updated_at"],parsed[coin_name]["usd_24h_vol"]))
+            conn.commit()
+            conn.close()
 
 
 
