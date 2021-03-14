@@ -24,12 +24,10 @@ def main():
     db_path = "/mnt/external_hdd/Data/coingecko.db"
     with open(r'coin_config.yaml') as file:
         coin_list = yaml.full_load(file)
-        requested_coins = "ids=" + ("%2").join(coin_list["coins"])
-
-    requested_coins = "ids=bitcoin%2Clitecoin%2Cethereum%2Cbinancecoin%2CCardano%2CPolkadot%2CXRP"
+        requested_coins = "ids=" + ("%2C").join(coin_list["coins"])
+    
     requested_fiat = "&vs_currencies=usd"
     requested_fields = "&include_market_cap=true&include_24hr_vol=true&include_last_updated_at=true"
-
     api_call = api_base_url + requested_coins + requested_fiat+ requested_fields
     timestamp = datetime.datetime.now()
     r = requests.get(api_call)
