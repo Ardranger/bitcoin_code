@@ -31,7 +31,7 @@ def merge():
     conn = sqlite3.connect('/mnt/external_hdd/Data/uber.db') 
     c = conn.cursor()
 
-    c.execute('''CREATE TABLE bitcoin_coinbase
+    c.execute('''CREATE TABLE IF NOT EXISTS bitcoin_coinbase
              (datetime text, price real)''')
     conn.commit()
     conn.close()
