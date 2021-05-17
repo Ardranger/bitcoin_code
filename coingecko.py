@@ -4,7 +4,6 @@ import json
 import time
 import sqlite3 
 import yaml
-import os
 
 def setup_db_coingecko(parsed,db_path):
     conn = sqlite3.connect(db_path)
@@ -22,8 +21,10 @@ def main():
     coins="bitcoin,litecoin,ethereum,binancecoin,Cardano,Polkadot,XRP"
     api_base_url = "https://api.coingecko.com/api/v3/simple/price?"
     db_path = "/mnt/external_hdd/Data/coingecko.db"
-    path_to_repo = os.getcwd()
-    read_file_name= path_to_repo + "/coin_config.yaml"	
+    path=__file__.split('/')
+    new_path=path[:-1] + ["coin_config.yaml"]
+    read_file_name = '/'.join(new_path)
+
     with open(read_file_name) as file:
         coin_list = yaml.full_load(file)
         requested_coins = "ids=" + ("%2C").join(coin_list["coins"])
