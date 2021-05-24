@@ -26,6 +26,8 @@ def merge():
     uber_df = uber_df.sort_values(by=["datetime"])
     #print(uber_df)
     uber_df = uber_df.drop_duplicates()
+    uber_df = uber_df.set_index('datetime').resample('1T').mean().interpolate('linear')
+    uber_df = uber_df.reset_index()
     #print(uber_df)
 
     conn = sqlite3.connect('/mnt/external_hdd/Data/uber.db') 
