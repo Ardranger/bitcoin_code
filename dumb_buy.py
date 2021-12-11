@@ -16,7 +16,6 @@ def main():
     current_price=0
     previous_price=0
     
-
     r = requests.get("https://api.coindesk.com/v1/bpi/currentprice.json")
     parsed = json.loads(r.text)
     inital_price = float(parsed["bpi"]["USD"]["rate_float"])
@@ -25,8 +24,6 @@ def main():
     conn = sqlite3.connect("coinbase.db")
     c = conn.cursor()
 
-    
-    
     while True:
         r = requests.get("https://api.coindesk.com/v1/bpi/currentprice.json")
         parsed = json.loads(r.text)

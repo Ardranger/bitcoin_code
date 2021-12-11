@@ -1,7 +1,6 @@
 import requests
 import datetime
 import json
-import time
 import sqlite3 
 import yaml
 
@@ -13,8 +12,6 @@ def setup_db_coingecko(parsed,db_path):
         conn.execute("CREATE TABLE IF NOT EXISTS " + str(coin_name) + " (datetime text, price float, market_cap float, last_update float, day_vol float)")
     conn.commit()
     conn.close()
-
-
 
 
 def main():
@@ -55,8 +52,5 @@ def main():
             conn.close()
 
 
-
-
 if __name__ == "__main__":
-
     main()
