@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 
-conn = sqlite3.connect("/mnt/external_hdd/Data/coinbase.db")
+conn = sqlite3.connect("/mnt/external_hdd/Data/uber.db")
 df = pd.read_sql_query("SELECT * FROM bitcoin_coinbase", conn)
 conn.close()
 

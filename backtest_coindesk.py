@@ -27,6 +27,3 @@ for index,row in df.iterrows():
     current_price = row[1]
     usd_wallet,bitcoin_wallet=one_min_trading_phemex(current_price,previous_price,usd_wallet,bitcoin_wallet)
     previous_price=current_price
-    
-
-
