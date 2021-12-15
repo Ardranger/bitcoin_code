@@ -11,7 +11,6 @@ conn.close()
 
 df['datetime'] = pd.to_datetime(df['datetime'], format='%Y-%m-%d %H:%M:%S')
 
-
 bitcoin_wallet=0
 usd_wallet=100
 previous_price=0
@@ -21,7 +20,6 @@ hodl_position_start = df['price'].iloc[0]
 hodl_position_end = df['price'].iloc[-1]
 hodl_profit= hodl_position_end/hodl_position_start*100
 print("Hodl outcome " + str(hodl_profit) + "%")
-
 
 for index,row in df.iterrows():
     current_price = row[1]
