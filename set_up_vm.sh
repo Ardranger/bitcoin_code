@@ -12,7 +12,7 @@ echo "//192.168.0.171/share /mnt/external_hdd cifs guest,uid=1000,nobrl,iocharse
 sudo mount /mnt/external_hdd
 ln -s  /mnt/external_hdd ~/hdd
 
-gnome-tweak-tool
+#gnome-tweak-tool
 
 
 # Conda set up 
@@ -33,3 +33,6 @@ bash Miniconda-latest* -b
 ## To recreate the python enviroment ##
 # conda create --name bitcoin_backtest --file bitcoin_backtest.txt
 # conda activate bitcoin_backtest
+
+#Set up connection to local apt cache 
+sudo sed -i 's|http://|http://192.168.0.171:3142/|g' sources.list
