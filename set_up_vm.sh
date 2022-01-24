@@ -35,4 +35,5 @@ bash Miniconda-latest* -b
 # conda activate bitcoin_backtest
 
 #Set up connection to local apt cache 
-sudo sed -i 's|http://|http://192.168.0.171:3142/|g' sources.list
+#  sudo sed -i 's|http://|http://192.168.0.171:3142/|g' sources.list
+#  sudo sed -i 's|http://192.168.0.171:3142/|http://|g' sources.list
