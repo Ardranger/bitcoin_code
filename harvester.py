@@ -6,7 +6,7 @@ import sqlite3
 import time
 
 
-def pull_from_coinbase():
+def pull_from_coindesk():
         r = requests.get("https://api.coindesk.com/v1/bpi/currentprice.json")
         parsed = json.loads(r.text)
         current_price = float(parsed["bpi"]["USD"]["rate_float"])
@@ -18,7 +18,7 @@ def pull_from_coinbase():
 def harvest():
     conn = sqlite3.connect("/mnt/external_hdd/Data/coindesk.db")
     c = conn.cursor()
-    date_time_obj,current_price =pull_from_coinbase()
+    date_time_obj,current_price =pull_from_coindesk()
     c.execute("INSERT INTO bitcoin_coinbase VALUES (?, ?);",(date_time_obj,current_price))
     conn.commit()
     conn.close()

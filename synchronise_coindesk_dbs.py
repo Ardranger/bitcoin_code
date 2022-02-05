@@ -38,7 +38,7 @@ def merge():
     conn.commit()
     conn.close()
 
-    conn = sqlite3.connect('/mnt/external_hdd/Data/uber.db') 
+    conn = sqlite3.connect('/mnt/external_hdd/Data/coindesk_uber.db') 
     c = conn.cursor()
     uber_df.to_sql('bitcoin_coinbase', conn, if_exists='replace', index = False)
     conn.commit()
