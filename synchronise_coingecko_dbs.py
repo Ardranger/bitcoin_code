@@ -74,7 +74,7 @@ def merge(coin_name):
     uber_df.to_sql(coin_name, conn, if_exists='replace', index = False)
     conn.commit()
     conn.close()
-    print("Merge " + str(coin_name))
+    print("Merged " + str(coin_name))
 
 def load_db_to_df(path_to_sqlite_db, coin_name):
 
