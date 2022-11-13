@@ -85,7 +85,7 @@ def load_db_to_df(path_to_sqlite_db, coin_name):
 
 
 if __name__ == "__main__":
-    #sync_dbs()
+    sync_dbs()
 
     path=__file__.split('/')
     new_path=path[:-1] + ["coin_config.yaml"]
